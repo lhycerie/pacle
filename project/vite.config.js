@@ -1,12 +1,15 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        home: resolve(import.meta.dirname, 'index.html'),
-        privacy: resolve(import.meta.dirname, 'privacy.html'),
+        main: resolve(__dirname, 'index.html'),
+        privacy: resolve(__dirname, 'privacy.html'),
       },
     },
   },

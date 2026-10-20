@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd project && npm install && npm run build",
+  "outputDirectory": "project/dist",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/privacy", "destination": "/privacy.html" }
+  ]
+}
