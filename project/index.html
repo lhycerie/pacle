@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Paclé builds thoughtful digital products for organizations with big ideas." />
+    <title>paclé — enrich your vision.</title>
+
+    <!-- inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- fa icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+    <!-- skip to main content for keyboard users (WCAG 2.4.1) -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <div id="app">
+
+        <!-- floating blobs -->
+        <div class="ambient-blobs-layer" aria-hidden="true">
+            <img class="ambient-blob blob-1" src="/assets/blob.png" alt="" />
+            <img class="ambient-blob blob-2" src="/assets/blob2.png" alt="" />
+            <img class="ambient-blob blob-3" src="/assets/blob.png" alt="" />
+            <img class="ambient-blob blob-4" src="/assets/blob2.png" alt="" />
+        </div>
+
+        <!-- navbar -->
+        <header class="navbar-wrapper">
+            <div class="navbar-logo-container">
+                <a class="brand-link" href="/" aria-label="paclé home">
+                    <img class="brand-logo" src="/assets/logo.png" alt="paclé logo" />
+                </a>
+            </div>
+
+            <div class="navbar-nav-container">
+                <nav class="nav-links" aria-label="Main navigation">
+                    <a href="#about" class="nav-item">About</a>
+                    <a href="#services" class="nav-item">Services</a>
+                    <a href="#projects" class="nav-item">Projects</a>
+                    <a href="#team" class="nav-item">Team</a>
+                    <a href="#contact" class="nav-item nav-cta">Get in touch</a>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false"
+                    aria-controls="mobile-menu">
+                    <span class="bar" aria-hidden="true"></span>
+                    <span class="bar" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <nav class="mobile-dropdown" id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#team">Team</a>
+                <a href="#contact" class="mobile-nav-cta">Get in touch</a>
+            </nav>
+        </header>
+
+        <svg width="0" height="0" style="position:absolute;visibility:hidden;" aria-hidden="true">
+            <defs>
+                <linearGradient id="purple-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#c2b8ff" />
+                    <stop offset="50%" stop-color="#e2dcff" />
+                    <stop offset="100%" stop-color="#ffffff" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <main id="main-content">
+            <!-- hero -->
+            <section id="home" class="hero">
+                <div class="hero-stage">
+                    <div class="hero-capsules">
+                        <canvas id="canvas" aria-hidden="true"></canvas>
+                        <img class="hero-flow-img" src="/assets/figma/hero-flow.png" alt="" aria-hidden="true" />
+                        <div class="hero-glow-overlay" aria-hidden="true"></div>
+                    </div>
+                    <div class="hero-copy-overlay">
+                        <h1 class="hero-wordmark">paclé</h1>
+                        <div class="hero-tagline">
+                            <span>enrich your</span>
+                            <span>vision.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- content layer -->
+            <div class="content-layer">
+                <!-- manifesto -->
+                <section id="about" class="section manifesto-section">
+                    <div class="manifesto-wrap">
+                        <h2 class="manifesto-heading reveal-manifesto">A place for ideas that deserve to <span
+                                class="word-move-mask"><span class="word-move-slide"><em
+                                        class="word-move">move.</em></span></span></h2>
+                    </div>
+                </section>
+
+                <!-- story -->
+                <section id="story" class="section story-section">
+                    <div class="story-blobs-layer" aria-hidden="true">
+                        <div class="story-blob story-blob-1"></div>
+                        <div class="story-blob story-blob-2"></div>
+                    </div>
+                    <div class="story-container">
+                        <div class="story-lines-wrap">
+                            <div class="story-kinetic-line story-line-left" data-story-dir="-1">
+                                <span class="story-line-content">A team of curious and driven <em>IT
+                                        students</em></span>
+                            </div>
+                            <div class="story-kinetic-line story-line-right" data-story-dir="1">
+                                <span class="story-line-content">looking for real <em>client partnerships</em></span>
+                            </div>
+                            <div class="story-kinetic-line story-line-left" data-story-dir="-1">
+                                <span class="story-line-content">and real-world problems <em>to solve.</em></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- skills -->
+                <section id="services" class="section skills-section">
+                    <div class="baseline-wrap">
+                        <h2 class="reveal-text">Our <span>expertise.</span></h2>
+                    </div>
+
+                    <div class="skills-list">
+                        <!-- 01: fullstack development -->
+                        <div class="skill-baseline-wrap">
+                            <div class="skill-row skill-row-odd">
+                                <span class="skill-number">01/</span>
+                                <div class="skill-content">
+                                    <div class="skill-title-roll">
+                                        <div class="skill-title-track">
+                                            <span class="skill-title skill-title-front">FULLSTACK DEVELOPMENT</span>
+                                            <span class="skill-title skill-title-back" aria-hidden="true">FULLSTACK
+                                                DEVELOPMENT</span>
+                                        </div>
+                                    </div>
+                                    <svg viewBox="0 0 48 48" class="skill-icon" fill="none" aria-hidden="true">
+                                        <rect x="6" y="8" width="36" height="32" rx="8" stroke="url(#purple-grad)"
+                                            stroke-width="2.5" />
+                                        <path d="M16 20L11 24L16 28" stroke="#ffffff" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M32 20L37 24L32 28" stroke="#ffffff" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M26 15L22 33" stroke="#ba7fed" stroke-width="2.5"
+                                            stroke-linecap="round" />
+                                        <circle cx="24" cy="24" r="2.5" fill="#9422bd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 02: website building -->
+                        <div class="skill-baseline-wrap">
+                            <div class="skill-row skill-row-even">
+                                <span class="skill-number">02/</span>
+                                <div class="skill-content">
+                                    <svg viewBox="0 0 48 48" class="skill-icon" fill="none" aria-hidden="true">
+                                        <rect x="6" y="10" width="36" height="28" rx="7" stroke="url(#purple-grad)"
+                                            stroke-width="2.5" />
+                                        <line x1="6" y1="18" x2="42" y2="18" stroke="rgba(194,184,255,0.4)"
+                                            stroke-width="2" />
+                                        <circle cx="12" cy="14" r="2" fill="#c2b8ff" />
+                                        <circle cx="18" cy="14" r="2" fill="#9422bd" />
+                                        <circle cx="24" cy="14" r="2" fill="#ffffff" />
+                                        <rect x="12" y="24" width="10" height="8" rx="2" fill="rgba(194,184,255,0.3)" />
+                                        <rect x="26" y="24" width="10" height="8" rx="2" fill="#9422bd"
+                                            opacity="0.75" />
+                                    </svg>
+                                    <div class="skill-title-roll">
+                                        <div class="skill-title-track">
+                                            <span class="skill-title skill-title-front">WEBSITE BUILDING</span>
+                                            <span class="skill-title skill-title-back" aria-hidden="true">WEBSITE
+                                                BUILDING</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 03: graphics & ui/ux design -->
+                        <div class="skill-baseline-wrap">
+                            <div class="skill-row skill-row-odd">
+                                <span class="skill-number">03/</span>
+                                <div class="skill-content">
+                                    <div class="skill-title-roll">
+                                        <div class="skill-title-track">
+                                            <span class="skill-title skill-title-front">GRAPHICS &amp; UI/UX
+                                                DESIGN</span>
+                                            <span class="skill-title skill-title-back" aria-hidden="true">GRAPHICS &amp;
+                                                UI/UX DESIGN</span>
+                                        </div>
+                                    </div>
+                                    <svg viewBox="0 0 48 48" class="skill-icon" fill="none" aria-hidden="true">
+                                        <path
+                                            d="M12 36L20 28L32 16C34.2 13.8 37.8 13.8 40 16C42.2 18.2 42.2 21.8 40 24L28 36L20 36L12 36Z"
+                                            stroke="url(#purple-grad)" stroke-width="2.5" stroke-linejoin="round" />
+                                        <circle cx="28" cy="20" r="3" fill="#ffffff" />
+                                        <path d="M12 36L16 32" stroke="#c2b8ff" stroke-width="2.5"
+                                            stroke-linecap="round" />
+                                        <path d="M8 40L12 36" stroke="#9422bd" stroke-width="3"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 04: vfx & 3d branding -->
+                        <div class="skill-baseline-wrap">
+                            <div class="skill-row skill-row-even">
+                                <span class="skill-number">04/</span>
+                                <div class="skill-content">
+                                    <svg viewBox="0 0 48 48" class="skill-icon" fill="none" aria-hidden="true">
+                                        <path d="M24 7L39 15.5V32.5L24 41L9 32.5V15.5L24 7Z" stroke="url(#purple-grad)"
+                                            stroke-width="2.5" stroke-linejoin="round" />
+                                        <path d="M24 7V24L39 15.5" stroke="rgba(255,255,255,0.85)" stroke-width="2" />
+                                        <path d="M24 24L9 15.5" stroke="rgba(194,184,255,0.85)" stroke-width="2" />
+                                        <path d="M24 24V41" stroke="#9422bd" stroke-width="2.5" />
+                                        <circle cx="24" cy="24" r="3" fill="#ffffff" />
+                                    </svg>
+                                    <div class="skill-title-roll">
+                                        <div class="skill-title-track">
+                                            <span class="skill-title skill-title-front">VFX &amp; 3D BRANDING</span>
+                                            <span class="skill-title skill-title-back" aria-hidden="true">VFX &amp; 3D
+                                                BRANDING</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 05: networking & cloud -->
+                        <div class="skill-baseline-wrap">
+                            <div class="skill-row skill-row-odd">
+                                <span class="skill-number">05/</span>
+                                <div class="skill-content">
+                                    <div class="skill-title-roll">
+                                        <div class="skill-title-track">
+                                            <span class="skill-title skill-title-front">NETWORKING &amp; CLOUD</span>
+                                            <span class="skill-title skill-title-back" aria-hidden="true">NETWORKING
+                                                &amp; CLOUD</span>
+                                        </div>
+                                    </div>
+                                    <svg viewBox="0 0 48 48" class="skill-icon" fill="none" aria-hidden="true">
+                                        <path
+                                            d="M14 28C10.7 28 8 25.3 8 22C8 18.9 10.3 16.4 13.4 16.1C14.4 11.5 18.5 8 23.5 8C29.3 8 34 12.5 34.3 18.2C37.5 18.7 40 21.6 40 25C40 28.9 36.9 32 33 32H14"
+                                            stroke="url(#purple-grad)" stroke-width="2.5" stroke-linecap="round" />
+                                        <circle cx="15" cy="38" r="3" stroke="#c2b8ff" stroke-width="2"
+                                            fill="#0d0818" />
+                                        <circle cx="24" cy="38" r="3" stroke="#ffffff" stroke-width="2"
+                                            fill="#9422bd" />
+                                        <circle cx="33" cy="38" r="3" stroke="#c2b8ff" stroke-width="2"
+                                            fill="#0d0818" />
+                                        <line x1="18" y1="38" x2="21" y2="38" stroke="rgba(194,184,255,0.6)"
+                                            stroke-width="2" />
+                                        <line x1="27" y1="38" x2="30" y2="38" stroke="rgba(194,184,255,0.6)"
+                                            stroke-width="2" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- projects -->
+                <section id="projects" class="projects-pinned-section">
+                    <div class="projects-sticky-frame">
+                        <div class="projects-header-bar">
+                            <div class="baseline-wrap">
+                                <h2 class="reveal-text projects-heading">Works made by <em>members.</em></h2>
+                            </div>
+                        </div>
+                        <div class="projects-viewport">
+                            <div class="projects-track" id="projects-track">
+                                <!-- project 1: epds fullstack website -->
+                                <a href="https://epdsportal.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                    class="project-slide" aria-label="ePDS Fullstack Website (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <img src="/assets/gif/epds.gif" alt="ePDS Fullstack Website preview"
+                                            class="project-media" loading="lazy" />
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">ePDS Fullstack Website</h3>
+                                        <span class="project-tag">Visit site &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 2: iskofound ui/ux design -->
+                                <a href="https://www.figma.com/design/6d7gkHYTHNXRh6M5TPlm5C/iSKOFound---Group-4?node-id=20-8&t=bHCpUucmgSFpxTCG-1"
+                                    target="_blank" rel="noopener noreferrer" class="project-slide"
+                                    aria-label="Iskofound UI/UX Design (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <img src="/assets/gif/iskofound.gif" alt="Iskofound UI/UX Design preview"
+                                            class="project-media" loading="lazy" />
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">Iskofound UI/UX Design</h3>
+                                        <span class="project-tag">View Figma &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 3: machine learning & data analytics -->
+                                <a href="https://bsit-2-4-ipt-group-10.vercel.app/project/" target="_blank"
+                                    rel="noopener noreferrer" class="project-slide"
+                                    aria-label="Machine Learning & Data Analytics (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <video src="/assets/gif/apriori.mp4" autoplay loop muted playsinline
+                                            class="project-media" aria-hidden="true"></video>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">Machine Learning & Data Analytics</h3>
+                                        <span class="project-tag">Explore model &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 4: network topology -->
+                                <a href="https://github.com/lawmiee2101/NorthBank---Topology" target="_blank"
+                                    rel="noopener noreferrer" class="project-slide"
+                                    aria-label="NorthBank Network Topology (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <img src="/assets/gif/topology.png" alt="NorthBank Network Topology Diagram"
+                                            class="project-media project-media-topology" loading="lazy" />
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">Network Topology</h3>
+                                        <span class="project-tag">View on GitHub &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 5: landbank mobile app -->
+                                <a href="https://github.com/lawmiee2101/NorthBank---Topology" target="_blank"
+                                    rel="noopener noreferrer" class="project-slide"
+                                    aria-label="Landbank UI/UX Redesign (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <video src="/assets/gif/landbank.mp4" autoplay loop muted playsinline
+                                            class="project-media" aria-hidden="true"></video>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">Landbank UI/UX Redesign</h3>
+                                        <span class="project-tag">Explore app &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 6: purpose pinoy youth organization -->
+                                <a href="https://purposepinoy.org/" target="_blank" rel="noopener noreferrer"
+                                    class="project-slide" aria-label="Purpose Pinoy Website (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <video src="/assets/gif/purposepinoy.mp4" autoplay loop muted playsinline
+                                            class="project-media" aria-hidden="true"></video>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">Purpose Pinoy Website</h3>
+                                        <span class="project-tag">Visit site &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 7: vfx game environment -->
+                                <a href="https://pawensi-portfolio.vercel.app/#showcase" target="_blank"
+                                    rel="noopener noreferrer" class="project-slide"
+                                    aria-label="VFX Game Environment (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <video src="/assets/gif/vfx-atmosphere.mp4" autoplay loop muted playsinline
+                                            class="project-media" aria-hidden="true"></video>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">VFX Game Environment</h3>
+                                        <span class="project-tag">View showcase &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 8: roblox vfx -->
+                                <a href="https://pawensi-portfolio.vercel.app/#showcase" target="_blank"
+                                    rel="noopener noreferrer" class="project-slide"
+                                    aria-label="Roblox VFX (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <video src="/assets/gif/vfxroblox.mp4" autoplay loop muted playsinline
+                                            class="project-media" aria-hidden="true"></video>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">Roblox VFX</h3>
+                                        <span class="project-tag">View showcase &nearr;</span>
+                                    </div>
+                                </a>
+
+                                <!-- project 9: vfx game effects -->
+                                <a href="https://pawensi-portfolio.vercel.app/#showcase" target="_blank"
+                                    rel="noopener noreferrer" class="project-slide"
+                                    aria-label="VFX Game Effects (opens in new tab)">
+                                    <div class="project-media-wrap">
+                                        <video src="/assets/gif/vfx-game-effects.mp4" autoplay loop muted playsinline
+                                            class="project-media" aria-hidden="true"></video>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3 class="project-title">VFX Game Effects</h3>
+                                        <span class="project-tag">View showcase &nearr;</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- affiliations -->
+                <section id="community" class="section marquee-section">
+                    <div class="baseline-wrap">
+                        <h2 class="reveal-text">Affiliated with <span>organizations.</span></h2>
+                    </div>
+
+                    <!-- row 1 -->
+                    <div class="marquee-wrapper marquee-row-1">
+                        <div class="marquee-track">
+                            <!-- track 1 - sequence a -->
+                            <div class="marquee-item">
+                                <img src="/assets/cisconetconnect.png" alt="Cisco NetConnect logo" />
+                                <span>Cisco NetConnect PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/fgwb.jpeg" alt="For Girls Who Build PH logo" class="badge-round" />
+                                <span>For Girls Who Build PH</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/aws.png" alt="AWS logo" />
+                                <span>AWS Student Builder Groups PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/arkpup.png" alt="ARK PUP logo" />
+                                <span>ARK PUP</span>
+                            </div>
+
+                            <!-- repeat for track density -->
+                            <div class="marquee-item">
+                                <img src="/assets/cisconetconnect.png" alt="Cisco NetConnect logo" />
+                                <span>Cisco NetConnect PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/fgwb.jpeg" alt="For Girls Who Build PH logo" class="badge-round" />
+                                <span>For Girls Who Build PH</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/aws.png" alt="AWS logo" />
+                                <span>AWS Student Builder Groups PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/arkpup.png" alt="ARK PUP logo" />
+                                <span>ARK PUP</span>
+                            </div>
+
+                            <!-- duplicate for seamless looping -->
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/cisconetconnect.png" alt="" />
+                                <span>Cisco NetConnect PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/fgwb.jpeg" alt="" class="badge-round" />
+                                <span>For Girls Who Build PH</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/aws.png" alt="" />
+                                <span>AWS Student Builder Groups PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/arkpup.png" alt="" />
+                                <span>ARK PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/cisconetconnect.png" alt="" />
+                                <span>Cisco NetConnect PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/fgwb.jpeg" alt="" class="badge-round" />
+                                <span>For Girls Who Build PH</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/aws.png" alt="" />
+                                <span>AWS Student Builder Groups PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/arkpup.png" alt="" />
+                                <span>ARK PUP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- row 2 -->
+                    <div class="marquee-wrapper marquee-row-2">
+                        <div class="marquee-track marquee-track-reverse">
+                            <!-- track 2 - sequence b -->
+                            <div class="marquee-item">
+                                <img src="/assets/gdg.png" alt="Google Developer Groups logo" />
+                                <span>Google Developer Groups on Campus PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/danggitph.jpeg" alt="Danggit PH logo" class="badge-round" />
+                                <span>Danggit PH</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/msc.png" alt="Microsoft Student Community logo" />
+                                <span>Microsoft Campus Club PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/ccissc.png" alt="CCISSC logo" />
+                                <span>PUP College of Computer and Information Sciences</span>
+                            </div>
+
+                            <!-- repeat for track density -->
+                            <div class="marquee-item">
+                                <img src="/assets/gdg.png" alt="Google Developer Groups logo" />
+                                <span>Google Developer Groups on Campus PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/danggitph.jpeg" alt="Danggit PH logo" class="badge-round" />
+                                <span>Danggit PH</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/msc.png" alt="Microsoft Student Community logo" />
+                                <span>Microsoft Campus Club PUP</span>
+                            </div>
+                            <div class="marquee-item">
+                                <img src="/assets/ccissc.png" alt="CCISSC logo" />
+                                <span>PUP College of Computer and Information Sciences</span>
+                            </div>
+
+                            <!-- duplicate for seamless looping -->
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/gdg.png" alt="" />
+                                <span>Google Developer Groups on Campus PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/danggitph.jpeg" alt="" class="badge-round" />
+                                <span>Danggit PH</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/msc.png" alt="" />
+                                <span>Microsoft Campus Club PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/ccissc.png" alt="" />
+                                <span>PUP College of Computer and Information Sciences</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/gdg.png" alt="" />
+                                <span>Google Developer Groups on Campus PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/danggitph.jpeg" alt="" class="badge-round" />
+                                <span>Danggit PH</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/msc.png" alt="" />
+                                <span>Microsoft Campus Club PUP</span>
+                            </div>
+                            <div class="marquee-item" aria-hidden="true">
+                                <img src="/assets/ccissc.png" alt="" />
+                                <span>PUP College of Computer and Information Sciences</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- team section -->
+                <section id="team" class="section team-section">
+                    <div class="baseline-wrap">
+                        <h2 class="reveal-text">Small team. <br> <em>Serious care.</em></h2>
+                    </div>
+                    <div class="grid team">
+                        <article>
+                            <div class="team-avatar" aria-hidden="true">C</div>
+                            <h3>China De Oro</h3>
+                            <small>Project Manager</small>
+                            <p>Fullstack Developer & <br> UI/UX Designer</p>
+                            <div class="team-socials">
+                                <a href="https://lhycerie.online" target="_blank" rel="noopener noreferrer"
+                                    class="team-social-link" aria-label="China De Oro's website (opens in new tab)">
+                                    <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/china-de-oro" target="_blank" rel="noopener noreferrer"
+                                    class="team-social-link" aria-label="China De Oro on LinkedIn (opens in new tab)">
+                                    <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="team-avatar" aria-hidden="true">L</div>
+                            <h3>Lawrence Belocura</h3>
+                            <small>Frontend Developer</small>
+                            <p>Frontend Developer & Network Architect</p>
+                            <div class="team-socials">
+                                <a href="https://belocura-lawrence-portfolio.vercel.app/" target="_blank"
+                                    rel="noopener noreferrer" class="team-social-link"
+                                    aria-label="Lawrence Belocura's website (opens in new tab)">
+                                    <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/belocura-lawrence-m-a84240334/" target="_blank"
+                                    rel="noopener noreferrer" class="team-social-link"
+                                    aria-label="Lawrence Belocura on LinkedIn (opens in new tab)">
+                                    <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="team-avatar" aria-hidden="true">C</div>
+                            <h3>Christian Ignacio</h3>
+                            <small>Backend Developer</small>
+                            <p>Fullstack Developer & <br> UI/UX Designer</p>
+                            <div class="team-socials">
+                                <a href="https://cmmi-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                    class="team-social-link"
+                                    aria-label="Christian Ignacio's website (opens in new tab)">
+                                    <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/christian-ignacio-032088321/" target="_blank"
+                                    rel="noopener noreferrer" class="team-social-link"
+                                    aria-label="Christian Ignacio on LinkedIn (opens in new tab)">
+                                    <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="team-avatar" aria-hidden="true">P</div>
+                            <h3>Paolo Cablao</h3>
+                            <small>Quality Analyst</small>
+                            <p>Game Developer & VFX Artist</p>
+                            <div class="team-socials">
+                                <a href="https://pawensi-portfolio.vercel.app/" target="_blank"
+                                    rel="noopener noreferrer" class="team-social-link"
+                                    aria-label="Paolo Cablao's website (opens in new tab)">
+                                    <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/cablao-paolo-n-099b6b334/" target="_blank"
+                                    rel="noopener noreferrer" class="team-social-link"
+                                    aria-label="Paolo Cablao on LinkedIn (opens in new tab)">
+                                    <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- contact -->
+                <section id="contact" class="section contact-section">
+                    <div class="contact-cta">
+                        <div class="baseline-wrap">
+                            <h2 class="reveal-text contact-heading">
+                                Big <em>ideas</em> deserve a <strong><b>place.</b></strong><br>
+                                Let’s <em>build</em> yours with <strong><em>paclé.</em></strong>
+                            </h2>
+                        </div>
+                        <p class="contact-sub">Have a thesis, capstone partnership, or digital product problem?</p>
+                        <button class="contact-action-btn" id="open-contact-btn" aria-haspopup="dialog"
+                            aria-controls="contact-dialog">
+                            <span>Get in touch</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <footer class="site-footer">
+            <div class="footer-top">
+                <div class="footer-brand-info">
+                    <a href="/" class="brand-link footer-logo-link" aria-label="paclé home">
+                        <img class="footer-logo" src="/assets/logo.png" alt="paclé logo" />
+                    </a>
+                </div>
+                <div class="footer-meta">
+                    <nav class="footer-meta-links" aria-label="Legal links">
+                        <a href="/privacy.html#terms">Terms of Use</a>
+                        <a href="/privacy.html#privacy">Privacy Policy</a>
+                    </nav>
+                    <span class="footer-copyright">© 2026 Paclé. All rights reserved.</span>
+                </div>
+            </div>
+
+            <!-- footer wordmark -->
+            <div class="footer-bottom-wordmark" aria-hidden="true">paclé</div>
+        </footer>
+
+        <!-- contact dialog -->
+        <dialog id="contact-dialog" aria-labelledby="dialog-heading" aria-modal="true">
+            <div class="dialog-header">
+                <div>
+                    <h2 id="dialog-heading">Let’s make room for it.</h2>
+                </div>
+                <button class="dialog-close" id="close-dialog-btn" aria-label="Close contact dialog">&times;</button>
+            </div>
+            <form id="contact-form">
+                <label for="contact-name">
+                    Name
+                    <input id="contact-name" name="name" required placeholder="Your name" autocomplete="name" />
+                </label>
+                <label for="contact-email">
+                    Email
+                    <input id="contact-email" type="email" name="email" required placeholder="you@domain.com"
+                        autocomplete="email" />
+                </label>
+                <label for="contact-org">
+                    Organization
+                    <input id="contact-org" name="organization" placeholder="Your company or school"
+                        autocomplete="organization" />
+                </label>
+                <label for="contact-message">
+                    Message
+                    <textarea id="contact-message" name="message" required
+                        placeholder="Tell us about what you want to build..."></textarea>
+                </label>
+                <button type="submit" class="form-submit-btn">
+                    <span>Send inquiry</span>
+                </button>
+            </form>
+        </dialog>
+    </div>
+
+    <!-- application script -->
+    <script type="module" src="/app.js"></script>
+</body>
+
+</html>
