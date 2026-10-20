@@ -15,6 +15,55 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
+// smooth keyboard arrow and page navigation harmonized with Lenis
+window.addEventListener(
+  'keydown',
+  (e) => {
+    const activeEl = document.activeElement;
+    const tag = activeEl ? activeEl.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || activeEl?.isContentEditable) {
+      return;
+    }
+    if (dialog && dialog.open) {
+      return;
+    }
+
+    const scrollStep = 100;
+    let delta = 0;
+
+    if (e.key === 'ArrowDown') {
+      delta = scrollStep;
+    } else if (e.key === 'ArrowUp') {
+      delta = -scrollStep;
+    } else if (e.key === 'PageDown') {
+      delta = window.innerHeight * 0.85;
+    } else if (e.key === 'PageUp') {
+      delta = -window.innerHeight * 0.85;
+    } else if (e.key === ' ' && !e.shiftKey) {
+      delta = window.innerHeight * 0.85;
+    } else if (e.key === ' ' && e.shiftKey) {
+      delta = -window.innerHeight * 0.85;
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      lenis.scrollTo(0, { duration: 0.8 });
+      return;
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      lenis.scrollTo(document.documentElement.scrollHeight, { duration: 0.8 });
+      return;
+    }
+
+    if (delta !== 0) {
+      e.preventDefault();
+      lenis.scrollTo(lenis.scroll + delta, {
+        duration: 0.35,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    }
+  },
+  { passive: false }
+);
+
 // contact dialog with accessible focus management
 const dialog = document.getElementById('contact-dialog');
 const openDialogBtn = document.getElementById('open-contact-btn');
@@ -154,34 +203,38 @@ const projectsSection = document.getElementById('projects');
 const projectsTrack = document.getElementById('projects-track');
 
 if (projectsSection && projectsTrack) {
-  function updateProjectsHorizontalScroll() {
-    const rect = projectsSection.getBoundingClientRect();
-    const scrollDistance = projectsSection.offsetHeight - window.innerHeight;
-    if (scrollDistance <= 0) return;
-
-
-    const scrollOffset = -rect.top;
-    const maxTranslate = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
-
-    if (scrollOffset <= 0) {
-      projectsTrack.style.transform = 'translate3d(0px, 0, 0)';
-    } else if (scrollOffset >= maxTranslate) {
-      // hold the last project before unpinning
-      projectsTrack.style.transform = `translate3d(-${maxTranslate}px, 0, 0)`;
-    } else {
-      // match horizontal movement to scroll distance
-      projectsTrack.style.transform = `translate3d(-${scrollOffset}px, 0, 0)`;
-    }
-  }
+  let cachedProjectsTop = 0;
+  let cachedMaxTranslate = 0;
+  let cachedScrollDistance = 0;
 
   function syncProjectsDimensions() {
-    const maxTranslate = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
-    projectsSection.style.height = `${maxTranslate + window.innerHeight}px`;
+    const rect = projectsSection.getBoundingClientRect();
+    const currentScroll = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY;
+    cachedProjectsTop = rect.top + currentScroll;
+    cachedMaxTranslate = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
+    projectsSection.style.height = `${cachedMaxTranslate + window.innerHeight}px`;
+    cachedScrollDistance = projectsSection.offsetHeight - window.innerHeight;
     updateProjectsHorizontalScroll();
   }
 
+  function updateProjectsHorizontalScroll() {
+    if (cachedScrollDistance <= 0) return;
+
+    const currentScroll = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY;
+    const scrollOffset = currentScroll - cachedProjectsTop;
+
+    if (scrollOffset <= 0) {
+      projectsTrack.style.transform = 'translate3d(0px, 0, 0)';
+    } else if (scrollOffset >= cachedMaxTranslate) {
+      // hold the last project before unpinning
+      projectsTrack.style.transform = `translate3d(-${cachedMaxTranslate}px, 0, 0)`;
+    } else {
+      // match horizontal movement to scroll distance
+      projectsTrack.style.transform = `translate3d(-${scrollOffset.toFixed(2)}px, 0, 0)`;
+    }
+  }
+
   lenis.on('scroll', updateProjectsHorizontalScroll);
-  window.addEventListener('scroll', updateProjectsHorizontalScroll, { passive: true });
   window.addEventListener('resize', syncProjectsDimensions);
   window.addEventListener('load', syncProjectsDimensions);
 
@@ -243,7 +296,6 @@ if (skillRows.length > 0) {
   }
 
   lenis.on('scroll', updateSkillsScrollState);
-  window.addEventListener('scroll', updateSkillsScrollState, { passive: true });
   window.addEventListener('resize', updateSkillsScrollState);
 
   setTimeout(updateSkillsScrollState, 80);
@@ -259,7 +311,6 @@ function resetRevealsAtTop() {
   }
 }
 lenis.on('scroll', resetRevealsAtTop);
-window.addEventListener('scroll', resetRevealsAtTop, { passive: true });
 
 // roll skill titles on scroll
 const skillsSection = document.getElementById('services');
@@ -286,7 +337,6 @@ if (skillsSection && skillTracks.length > 0) {
   }
 
   lenis.on('scroll', updateSkillsRollingOnScroll);
-  window.addEventListener('scroll', updateSkillsRollingOnScroll, { passive: true });
   window.addEventListener('resize', updateSkillsRollingOnScroll);
   setTimeout(updateSkillsRollingOnScroll, 100);
 }
@@ -326,7 +376,6 @@ if (storySection && storyLines.length > 0) {
   }
 
   lenis.on('scroll', updateStoryScroll);
-  window.addEventListener('scroll', updateStoryScroll, { passive: true });
   window.addEventListener('resize', updateStoryScroll);
   updateStoryScroll();
   setTimeout(updateStoryScroll, 100);
@@ -363,7 +412,6 @@ function updateNavbarScrollState() {
 }
 
 lenis.on('scroll', updateNavbarScrollState);
-window.addEventListener('scroll', updateNavbarScrollState, { passive: true });
 window.addEventListener('resize', () => {
   syncNavbarMetrics();
   updateNavbarScrollState();
