@@ -8,6 +8,7 @@ const lenis = new Lenis({
   smoothWheel: true,
   touchMultiplier: 1.5,
 });
+window.lenis = lenis;
 
 function raf(time) {
   lenis.raf(time);
@@ -15,54 +16,7 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// smooth keyboard arrow and page navigation harmonized with Lenis
-window.addEventListener(
-  'keydown',
-  (e) => {
-    const activeEl = document.activeElement;
-    const tag = activeEl ? activeEl.tagName.toLowerCase() : '';
-    if (tag === 'input' || tag === 'textarea' || tag === 'select' || activeEl?.isContentEditable) {
-      return;
-    }
-    if (dialog && dialog.open) {
-      return;
-    }
 
-    const scrollStep = 100;
-    let delta = 0;
-
-    if (e.key === 'ArrowDown') {
-      delta = scrollStep;
-    } else if (e.key === 'ArrowUp') {
-      delta = -scrollStep;
-    } else if (e.key === 'PageDown') {
-      delta = window.innerHeight * 0.85;
-    } else if (e.key === 'PageUp') {
-      delta = -window.innerHeight * 0.85;
-    } else if (e.key === ' ' && !e.shiftKey) {
-      delta = window.innerHeight * 0.85;
-    } else if (e.key === ' ' && e.shiftKey) {
-      delta = -window.innerHeight * 0.85;
-    } else if (e.key === 'Home') {
-      e.preventDefault();
-      lenis.scrollTo(0, { duration: 0.8 });
-      return;
-    } else if (e.key === 'End') {
-      e.preventDefault();
-      lenis.scrollTo(document.documentElement.scrollHeight, { duration: 0.8 });
-      return;
-    }
-
-    if (delta !== 0) {
-      e.preventDefault();
-      lenis.scrollTo(lenis.scroll + delta, {
-        duration: 0.35,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-    }
-  },
-  { passive: false }
-);
 
 // contact dialog with accessible focus management
 const dialog = document.getElementById('contact-dialog');
@@ -209,10 +163,13 @@ if (projectsSection && projectsTrack) {
 
   function syncProjectsDimensions() {
     const rect = projectsSection.getBoundingClientRect();
-    const currentScroll = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY;
-    cachedProjectsTop = rect.top + currentScroll;
+    cachedProjectsTop = rect.top + window.scrollY;
     cachedMaxTranslate = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
-    projectsSection.style.height = `${cachedMaxTranslate + window.innerHeight}px`;
+    const targetHeight = `${cachedMaxTranslate + window.innerHeight}px`;
+    if (projectsSection.style.height !== targetHeight) {
+      projectsSection.style.height = targetHeight;
+      lenis.resize();
+    }
     cachedScrollDistance = projectsSection.offsetHeight - window.innerHeight;
     updateProjectsHorizontalScroll();
   }
@@ -237,12 +194,6 @@ if (projectsSection && projectsTrack) {
   lenis.on('scroll', updateProjectsHorizontalScroll);
   window.addEventListener('resize', syncProjectsDimensions);
   window.addEventListener('load', syncProjectsDimensions);
-
-  // recalculate after media loads
-  document.querySelectorAll('.project-media').forEach((media) => {
-    media.addEventListener('load', syncProjectsDimensions);
-    media.addEventListener('loadeddata', syncProjectsDimensions);
-  });
 
   syncProjectsDimensions();
   setTimeout(syncProjectsDimensions, 100);
