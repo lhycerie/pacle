@@ -160,12 +160,14 @@ if (projectsSection && projectsTrack) {
   let cachedProjectsTop = 0;
   let cachedMaxTranslate = 0;
   let cachedScrollDistance = 0;
+  const START_HOLD = 420; // Hold buffer before horizontal translation begins
+  const END_HOLD = 380;   // Hold buffer at the end before unpinning
 
   function syncProjectsDimensions() {
     const rect = projectsSection.getBoundingClientRect();
     cachedProjectsTop = rect.top + window.scrollY;
     cachedMaxTranslate = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
-    const targetHeight = `${cachedMaxTranslate + window.innerHeight}px`;
+    const targetHeight = `${cachedMaxTranslate + START_HOLD + END_HOLD + window.innerHeight}px`;
     if (projectsSection.style.height !== targetHeight) {
       projectsSection.style.height = targetHeight;
       lenis.resize();
@@ -180,14 +182,16 @@ if (projectsSection && projectsTrack) {
     const currentScroll = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY;
     const scrollOffset = currentScroll - cachedProjectsTop;
 
-    if (scrollOffset <= 0) {
+    if (scrollOffset <= START_HOLD) {
+      // Hold at initial position (Slide 0 / ePDS and initial slides cleanly visible)
       projectsTrack.style.transform = 'translate3d(0px, 0, 0)';
-    } else if (scrollOffset >= cachedMaxTranslate) {
-      // hold the last project before unpinning
+    } else if (scrollOffset >= cachedMaxTranslate + START_HOLD) {
+      // Hold at final project before unpinning into Team section
       projectsTrack.style.transform = `translate3d(-${cachedMaxTranslate}px, 0, 0)`;
     } else {
-      // match horizontal movement to scroll distance
-      projectsTrack.style.transform = `translate3d(-${scrollOffset.toFixed(2)}px, 0, 0)`;
+      // Smooth horizontal movement between START_HOLD and cachedMaxTranslate + START_HOLD
+      const horizontalOffset = scrollOffset - START_HOLD;
+      projectsTrack.style.transform = `translate3d(-${horizontalOffset.toFixed(2)}px, 0, 0)`;
     }
   }
 
@@ -198,6 +202,29 @@ if (projectsSection && projectsTrack) {
   syncProjectsDimensions();
   setTimeout(syncProjectsDimensions, 100);
   setTimeout(syncProjectsDimensions, 500);
+}
+
+// pause offscreen project videos to free up GPU decoder contexts and eliminate scroll hitching
+const projectVideos = document.querySelectorAll('.project-slide video');
+if ('IntersectionObserver' in window && projectVideos.length > 0) {
+  const videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { rootMargin: '0px 200px 0px 200px', threshold: 0.01 }
+  );
+
+  projectVideos.forEach((video) => videoObserver.observe(video));
 }
 
 // observe stationary wrappers so clipped headings can reveal
@@ -297,29 +324,39 @@ const storySection = document.getElementById('story');
 const storyLines = document.querySelectorAll('.story-kinetic-line');
 
 if (storySection && storyLines.length > 0) {
-  function updateStoryScroll() {
-    const vh = window.innerHeight;
+  let cachedStoryTop = 0;
+  let cachedStoryHeight = 0;
+
+  function syncStoryDimensions() {
     const rect = storySection.getBoundingClientRect();
+    cachedStoryTop = rect.top + window.scrollY;
+    cachedStoryHeight = storySection.offsetHeight;
+  }
 
-    if (rect.bottom < -100 || rect.top > vh + 100) return;
+  function updateStoryScroll() {
+    const currentScroll = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY;
+    const vh = window.innerHeight;
+    const sectionTop = cachedStoryTop - currentScroll;
+    const sectionBottom = sectionTop + cachedStoryHeight;
 
-    // distance from the viewport center
-    const sectionCenter = rect.top + rect.height / 2;
+    if (sectionBottom < -100 || sectionTop > vh + 100) return;
+
+    // smooth distance from viewport center
+    const sectionCenter = sectionTop + cachedStoryHeight / 2;
     const viewportCenter = vh / 2;
-    const totalTravel = (vh + rect.height) / 2;
+    const totalTravel = (vh + cachedStoryHeight) / 2;
     const rawProgress = (sectionCenter - viewportCenter) / totalTravel;
     const progress = Math.max(-1.5, Math.min(1.5, rawProgress));
 
-
-    const maxShift = Math.min(window.innerWidth * 0.28, 260);
+    // Smooth quadratic curve avoids harsh V-shaped derivative at center
+    const absProg = Math.min(1.4, Math.abs(progress));
+    const smoothFactor = absProg * absProg;
+    const maxShift = Math.min(window.innerWidth * 0.22, 220);
 
     storyLines.forEach((line) => {
       const dir = parseFloat(line.getAttribute('data-story-dir') || '-1');
-      // shift each line outward from the center
-
-      const shiftX = dir * Math.abs(progress) * maxShift;
-      const dist = Math.abs(progress);
-      const opacity = dist >= 1.2 ? Math.max(0, 1 - (dist - 1.2) * 3) : 1;
+      const shiftX = dir * smoothFactor * maxShift;
+      const opacity = absProg >= 1.2 ? Math.max(0, 1 - (absProg - 1.2) * 3) : 1;
 
       line.style.setProperty('--story-line-x', `${shiftX.toFixed(1)}px`);
       line.style.setProperty('--story-line-opacity', opacity.toFixed(2));
@@ -327,9 +364,21 @@ if (storySection && storyLines.length > 0) {
   }
 
   lenis.on('scroll', updateStoryScroll);
-  window.addEventListener('resize', updateStoryScroll);
+  window.addEventListener('resize', () => {
+    syncStoryDimensions();
+    updateStoryScroll();
+  });
+  window.addEventListener('load', () => {
+    syncStoryDimensions();
+    updateStoryScroll();
+  });
+
+  syncStoryDimensions();
   updateStoryScroll();
-  setTimeout(updateStoryScroll, 100);
+  setTimeout(() => {
+    syncStoryDimensions();
+    updateStoryScroll();
+  }, 100);
 }
 
 // swap the logo from right to left after the hero
